@@ -1,0 +1,15 @@
+#samples {
+    overflow: scroll;
+    height: 200px;
+    height: 200px;
+
+}
+table{
+    overflow: auto;
+    display: block;
+    padding: 10px;
+}
+#container{
+    padding: 20px;
+    background-color: aqua;
+}
