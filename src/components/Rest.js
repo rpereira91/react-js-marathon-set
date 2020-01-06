@@ -1,5 +1,7 @@
 
 import React, { Component } from 'react';
+import { Container, Button } from 'react-bootstrap';
+import './style/main.css'
 class Rest extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +30,7 @@ class Rest extends Component {
         }
 
         if (sec === 0) {
-            // clearInterval(this.intervalHandle);
+            clearInterval(this.intervalHandle);
             this.stopCountDown();
         }
 
@@ -48,24 +50,25 @@ class Rest extends Component {
         if (this.state.showBtn) {
             return (
                 <div>
-                    <button onClick={this.startCountDown}>Begin Rest</button>
+                    <Button variant="secondary" onClick={this.startCountDown}>Begin Rest</Button>
                 </div>
             );
         } else {
             return (
 
                 < div >
-                    <button onClick={this.stopCountDown}>Begin Workout</button>
+                    <Button variant="secondary" onClick={this.stopCountDown}>Begin Workout</Button>
                 </div >
             );
         }
     }
     render() {
         return (
-            <div>
-                <h2> Rest for: {this.state.seconds} seconds</h2>
+            <Container className='rest'>
+                <h2> Rest</h2>
+                <h3>{this.state.seconds} s</h3>
                 {this.restButton()}
-            </div>
+            </Container>
         );
     }
 }

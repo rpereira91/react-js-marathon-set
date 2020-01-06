@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import './style/container.css'
+import './style/main.css';
+
 class DisplaySet extends Component {
     render() {
         return (
-            <div id="container">
-                <br></br>
-                <table>
-                    <th>
+            <div id="set-display">
+                <p>
                         Set:
-                        {this.props.currentSet.set}
-                    </th>
-                    <th>
+                        {this.props.currentSet.set} &nbsp;
                         Reps:
                         {this.props.currentSet.reps}
-                    </th>
-                </table>
+                </p>
             </div>
         );
     }

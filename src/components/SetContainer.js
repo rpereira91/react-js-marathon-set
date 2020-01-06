@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 import DisplaySet from './DisplaySet';
-import './style/container.css';
+import { Container } from 'react-bootstrap';
+
+import './style/main.css';
 export default class SetContainer extends Component {
     render() {
         return (
-            <div>
-                <table id="samples" >
-
+            <Container>
                     {this.props.log.map((l) =>
-                        <th>
-                            <div>
-                                <DisplaySet currentSet={l} />
-                            </div>
-                        </th>
+                        <div id='samples'>
+                            <DisplaySet currentSet={l} />
+                            <br></br>
+                        </div>
                     )}
-                </table>
-            </div>
+            </Container>
         )
     }
 }
