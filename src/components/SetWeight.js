@@ -14,8 +14,10 @@ class SetWeight extends Component {
     }
     onFormSbumit = (event) => {
         event.preventDefault();
-
-        this.props.setWeightReps(this.state.maxReps, this.state.reps, this.state.rest)
+        var maxReps = this.state.maxReps;
+        var reps = this.state.reps;
+        var rest = this.state.rest;
+        this.props.setWeightReps(this.state.maxReps, this.state.reps, this.state.rest);
     }
     render() {
         return (
@@ -30,7 +32,7 @@ class SetWeight extends Component {
                         <Col sm={2}>
                             <Form.Control
                                 type="number"
-                                placeholder="lbs"
+                                placeholder="total reps"
                                 className="maxReps"
                                 value={this.state.maxReps}
                                 size='sm'

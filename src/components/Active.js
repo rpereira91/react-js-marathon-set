@@ -24,7 +24,7 @@ class Active extends Component {
     }
     render() {
         return (
-            <Container className='active'>
+            <Container className='workout'>
                 <Form>
                     <Form.Group as={Row}>
                     <Col>

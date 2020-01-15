@@ -3,6 +3,7 @@
     --active-color: #FC4445;
     --rest-color: #55BCC9;
     --set-info-color: #3FEEE6;
+    --border-rad: 25px;
 }
 
 html {
@@ -15,18 +16,19 @@ body {
 }
 
 .rest {
+    margin-top: 10px;
     background-color: var(--rest-color);
-    ;
     padding: 10px;
-    border-radius: 25px;
+    border-radius: var(--border-rad);
     width: 85%;
     text-align: center;
 }
 
-.active {
+.workout {
+    margin-top: 10px;
     background-color: var(--active-color);
     padding: 10px;
-    border-radius: 25px;
+    border-radius: var(--border-rad);
     width: 100%;
     text-align: center;
     color: wheat;
@@ -44,7 +46,7 @@ body {
 
 .app-container {
     background-color: var(--main-bg-color);
-    padding-top: 45px;
+    /* padding-top: 45px; */
 }
 
 .header {
@@ -68,11 +70,8 @@ body {
 
 }
 
-#set-display {
-    padding: 15px;
-    width: 95%;
+.set-display {
+    align-content: center;
     text-align: center;
-    background-color: var(--set-info-color);
-    border-radius: 24px;
-    margin-top: 19px;
+    margin-top: 11px;
 }

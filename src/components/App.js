@@ -3,7 +3,8 @@ import Rest from './Rest';
 import SetWeight from './SetWeight';
 import Active from './Active';
 import DisplayStats from './DisplayStats';
-import { Container, Alert, Button, Modal } from 'react-bootstrap';
+import InfoBar from './InfoBar';
+import { Container, Alert, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/main.css';
 
@@ -12,14 +13,15 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bodyWeight: 0,
+      totalReps: 0,
       maxReps: 0,
       repsDone: 0,
       showRest: false,
-      showInfo: false,
       workoutDone: false,
+      showStatsAlert: false,
       nextSet: 1,
       restTime: 40,
+      workoutInfo: {},
 
 
     }
@@ -29,30 +31,35 @@ export default class App extends Component {
     this.addSet = this.addSet.bind(this);
     this.showDone = this.showDone.bind(this);
     this.clearInfo = this.clearInfo.bind(this);
-    this.infoModal = this.infoModal.bind(this);
+    this.showSets = this.showSets.bind(this);
+    this.setStats = this.setStats.bind(this);
+    this.setInfo = this.setInfo.bind(this);
 
   }
   setWeightReps(weight, reps, rest) {
-    console.log(weight, reps);
     this.setState({
-      bodyWeight: weight,
+      totalReps: weight,
       maxReps: reps,
       restTime: rest
     })
   }
-
+  setInfo(){
+    var setsLeft = parseInt((this.state.totalReps - this.state.repsDone) / this.state.maxReps);
+    var repsLeft = parseInt((this.state.totalReps - this.state.repsDone));
+    var stats = {
+      "totalReps": this.state.totalReps,
+      "repsDone": this.state.repsDone,
+      "repsLeft": repsLeft,
+      "setsLeft": setsLeft
+    };
+    this.setState({workoutInfo: stats})
+    // this.workoutInfo = stats;
+  }
   displayWeight() {
-    if (this.state.bodyWeight) {
-      var setsLeft = parseInt((this.state.bodyWeight - this.state.repsDone) / this.state.maxReps);
-      var stats = {
-        "bodyWeight": this.state.bodyWeight,
-        "repsDone": this.state.repsDone,
-        "maxReps": this.state.maxReps,
-        "setsLeft": setsLeft
-      };
+    if (this.state.totalReps) {
+      
       return (
         <div>
-          <DisplayStats currentStats={stats} />
           {this.startRest()}
         </div>
       );
@@ -94,9 +101,10 @@ export default class App extends Component {
     }
     this.setState({ maxReps: newReps, restTime: newRest, repsDone: repTotal, nextSet: this.state.nextSet + 1 })
     log = [set, ...log];
-    if (repTotal > this.state.bodyWeight) {
+    if (repTotal > this.state.totalReps) {
       this.setState({ workoutDone: true })
     }
+    this.setInfo()
   }
   showDone() {
     if (this.state.workoutDone) {
@@ -105,7 +113,7 @@ export default class App extends Component {
           <h1>Workout Done</h1>
         </div>
       );
-    } else if (this.state.bodyWeight) {
+    } else if (this.state.totalReps) {
       return (
         <div className="summary">
           <h1>Workout Summary</h1>
@@ -116,7 +124,7 @@ export default class App extends Component {
   }
   clearInfo(event) {
     this.setState({
-      bodyWeight: 0,
+      totalReps: 0,
       maxReps: 0,
       repsDone: 0,
       showRest: false,
@@ -126,22 +134,27 @@ export default class App extends Component {
     });
     log = []
   }
-  infoModal() {
-    this.setState({ showInfo: !this.state.showInfo })
+  showSets() {
+    if (log.length > 0) {
+      return (
+        <div>
+          <SetContainer log={log} />
+        </div>
+      )
+    }
+  }
+  setStats() {
+    this.setState({ showStatsAlert: !this.state.showStatsAlert})
   }
   render() {
     return (
       <div className="app-container">
-        <div className="header">
-          <h2 onClick={this.infoModal}>Show Info</h2>
-          <Modal show={this.state.showInfo} onHide={this.infoModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Information</Modal.Title>
-            </Modal.Header>
-          </Modal>
-        </div>
-        <Container>
 
+        <InfoBar clearInfo={this.clearInfo} setStats={this.setStats} statsAlert = {this.state.showStatsAlert} />
+        <Container>
+          <Alert show={this.state.showStatsAlert}>
+            <DisplayStats currentStats={this.state.workoutInfo} />
+          </Alert>
           {this.displayWeight()}
           {/* {this.startRest()} */}
           {/* {this.showDone()} */}
@@ -152,10 +165,7 @@ export default class App extends Component {
         </p>
             <Button variant="danger" onClick={this.clearInfo}>Start Over</Button>
           </Alert>
-          <div className="inner-content">
-
-            <SetContainer log={log} />
-          </div>
+          {this.showSets()}
 
         </Container>
 

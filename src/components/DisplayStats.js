@@ -9,9 +9,9 @@ export default class DisplayStats extends Component {
             <Container>
                 <Row>
                     <Col>
-                    Total Reps: {this.props.currentStats.bodyWeight}
+                    Total Reps: {this.props.currentStats.totalReps}
                     <br></br>
-                    Max reps/set: {this.props.currentStats.maxReps}
+                    Reps Left: {this.props.currentStats.repsLeft}
                     </Col>
                     <Col>
                     Reps Done: {this.props.currentStats.repsDone}
